@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Colors</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        
+        <link rel="stylesheet" href="src/css/page1.css">
+    </head>
+
+    <body id="body">
+
+        <main id="main">
+            <nav class="navbar">
+                <h1 class="title">Gradientity</h1>
+                <div>
+                    <span>Quantidade de Cores <input class="me-4" ref="card_quant" type="number" min="1" max="1000" :value=colors_quantity></span>
+                    <button ref="btn_update">Atualizar Cores</button>
+                </div>
+            </nav>
+            <hr>
+            <div class="content">
+                <div class="row mx-4 my-4">
+                    <div class="card" v-for="(color, index) in colors" :key="index">
+                        <div :style=color>
+                            <a v-on:click=callModal(color)>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="32px" height="32px" viewBox="0 -15 64 64">
+                                    <path data-name="layer2" fill="none" stroke="#fff" stroke-miterlimit="10" stroke-width="2"
+                                        d="M38.192 38.191L50 50" stroke-linejoin="round" stroke-linecap="round"></path>
+                                    <circle data-name="layer1" cx="29" cy="29" r="13" fill="none" stroke="#fff" stroke-miterlimit="10"
+                                        stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></circle>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="d-none" ref="close_modal" id="color_modal"></div>
+
+        </main>
+        
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+        <script src="main.js"></script>
+
+        <script>
+            var vue_app = new Vue({
+                el: 'main',
+                data: {
+                    colors_quantity: 20,
+                    colors: [
+                        {background: "linear-gradient(66deg, #5B488B 0%, #47C8E4 100%)"}
+                    ]
+                },
+                created: function() {
+                    this.setColors(this.colors_quantity)
+                },
+                mounted: function() {
+                    this.$refs['card_quant'].addEventListener('change', function(){
+                        if (parseInt(this.value) < parseInt(this.getAttribute('min')) || parseInt(this.value) > parseInt(this.getAttribute('max'))) {
+                            alert("O número de cores precisa ser maior que 0 e menos que 1000.")
+                            this.value = vue_app.colors_quantity
+                        } else {
+                            vue_app.colors_quantity = this.value 
+                            vue_app.setColors(this.value)
+                        }
+                    }),
+
+                    this.$refs['btn_update'].addEventListener('click', function(){                        
+                        vue_app.setColors(vue_app.colors_quantity)
+                    }),
+
+                    document.body.onkeyup = function(event){
+                        if(event.keyCode == 32){
+                            vue_app.setColors(vue_app.colors_quantity)
+                        }
+                    }
+                    this.$refs['close_modal'].addEventListener('click', function() {
+                        let modal = document.getElementById('color_modal').classList.replace('d-flex','d-none')
+                    })
+
+                },
+                methods: {
+
+                    setColors(quant) {
+                        var colors = []
+                        for (let i = 1; i <= quant; i++) {
+                            colors.push({background: `linear-gradient(${get_random_deg(0, 360)}, ${get_random_color()} 0%, ${get_random_color()} 100%)`})
+                        }
+                        this.colors = colors
+                    },
+                    
+                    callModal(color) {
+                        
+                        let modal = document.getElementById('color_modal')
+                        modal.style.background = color['background']
+                        modal.classList.replace('d-none','d-flex')
+                        
+                    }
+                }
+            })
+        </script>
+    </body>
+</html>
