@@ -13,7 +13,7 @@ router.get('/', function(req, res){
 })
 
 router.get('/colors', function(req, res){
-    res.sendFile(path.join(__dirname+'/src/html/page1.html'))
+    res.sendFile(path.join(__dirname+'/src/html/colors.html'))
 })
 
 app.use('/', router)

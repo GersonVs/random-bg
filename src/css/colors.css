@@ -66,11 +66,25 @@ h1.title {
 }
 
 nav.navbar {
-    padding: 1rem 1rem;
+    position: fixed;
+    top: 0;
+    z-index: 1;
+    background: #fff;
+    width: 100%;
+    padding: 1rem 0;
+    box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
+}
+
+nav.navbar > div.nav-content {
+    padding: 0 1rem;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
+}
+
+div.content {
+    transform: translateY(12vh);
 }
 
 div.row {
@@ -101,15 +115,15 @@ div.card div a:hover svg {
 }
 
 #color_modal {
-    position: absolute;
+    position: fixed;
     top: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 99;
     justify-content: end;
     cursor: url('/src/img/close_cursor.svg'), auto;
 }
-
 
 @media (max-width: 550px) {
     h1.title {

@@ -11,20 +11,21 @@
         <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         
-        <link rel="stylesheet" href="src/css/page1.css">
+        <link rel="stylesheet" href="src/css/colors.css">
     </head>
 
     <body id="body">
 
         <main id="main">
             <nav class="navbar">
-                <h1 class="title">Gradientity</h1>
-                <div>
-                    <span>Quantidade de Cores <input class="me-4" ref="card_quant" type="number" min="1" max="1000" :value=colors_quantity></span>
-                    <button ref="btn_update">Atualizar Cores</button>
+                <div class="nav-content">
+                    <h1 class="title">Gradientity</h1>
+                    <div>
+                        <span>Quantidade de Cores <input class="me-4" ref="card_quant" type="number" min="1" max="1000" :value=colors_quantity></span>
+                        <button ref="btn_update">Atualizar Cores</button>
+                    </div>
                 </div>
             </nav>
-            <hr>
             <div class="content">
                 <div class="row mx-4 my-4">
                     <div class="card" v-for="(color, index) in colors" :key="index">
@@ -43,7 +44,7 @@
             </div>
             
             <div class="d-none" ref="close_modal" id="color_modal"></div>
-
+            
         </main>
         
         <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
@@ -83,6 +84,7 @@
                     }
                     this.$refs['close_modal'].addEventListener('click', function() {
                         let modal = document.getElementById('color_modal').classList.replace('d-flex','d-none')
+                        document.body.style.overflowY = 'auto'
                     })
 
                 },
@@ -97,11 +99,11 @@
                     },
                     
                     callModal(color) {
-                        
+
                         let modal = document.getElementById('color_modal')
                         modal.style.background = color['background']
-                        modal.classList.replace('d-none','d-flex')
-                        
+                        modal.classList.replace('d-none', 'd-flex')
+                        document.body.style.overflowY = 'hidden'
                     }
                 }
             })
